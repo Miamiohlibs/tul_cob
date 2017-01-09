@@ -430,6 +430,21 @@
     See http://wiki.apache.org/solr/SpatialSearch
    -->
     <fieldtype name="geohash" class="solr.GeoHashField"/>
+
+    <fieldType name="xfacet" class="edu.upenn.library.solrplugins.CaseInsensitiveSortingTextField" payloadHandler="edu.upenn.library.solrplugins.JsonReferencePayloadHandler" sortMissingLast="true" omitNorms="true">
+      <analyzer type="index">
+        <tokenizer class="edu.upenn.library.solrplugins.JsonReferencePayloadTokenizerFactory"/>
+        <!-- use SplitFilter to create 'normalized' token based on 'filing' token -->
+        <filter class="edu.upenn.library.solrplugins.tokentype.TokenTypeSplitFilterFactory" includeTypes="filing" outputType="normalized" _class="org.apache.lucene.analysis.icu.ICUFoldingFilterFactory" />
+        <filter class="edu.upenn.library.solrplugins.tokentype.TokenTypeJoinFilterFactory" inputTypes="normalized,filing,prefix" outputType="indexed" typeForPayload="normalized" outputComponentTypes="false"/>
+      </analyzer>
+      <analyzer type="query">
+        <tokenizer class="edu.upenn.library.solrplugins.JsonReferencePayloadTokenizerFactory"/>
+        <!-- use SplitFilter to create 'normalized' token based on 'filing' token -->
+        <filter class="edu.upenn.library.solrplugins.tokentype.TokenTypeSplitFilterFactory" includeTypes="filing" outputType="normalized" _class="org.apache.lucene.analysis.icu.ICUFoldingFilterFactory" />
+        <filter class="edu.upenn.library.solrplugins.tokentype.TokenTypeJoinFilterFactory" inputTypes="normalized,filing,prefix" outputType="indexed" typeForPayload="normalized" outputComponentTypes="true"/>
+      </analyzer>
+    </fieldType>
  </types>
 
 
@@ -488,6 +503,11 @@
    <!-- format is used for facet, display, and choosing which partial to use for the show view, so it must be stored and indexed -->
    <field name="format" type="string" indexed="true" stored="true" multiValued="true"/>
 
+   <!-- Cross-referenced facet fields -->
+   <field name="title_xfacet" type="xfacet" indexed="true" stored="true" multiValued="true"/>
+   <field name="subject_topic_xfacet" type="xfacet" indexed="true" stored="true" multiValued="true"/>
+   <field name="subject_xfacet" type="xfacet" indexed="true" stored="true" multiValued="true" />
+   <field name="location_xfacet" type="xfacet" indexed="true" stored="true" multiValued="true" />
    
 
    <!-- Dynamic field definitions.  If a field name is not found, dynamicFields

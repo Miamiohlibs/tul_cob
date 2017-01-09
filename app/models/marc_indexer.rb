@@ -2,6 +2,7 @@ $:.unshift './config'
 class MarcIndexer < Blacklight::Marc::Indexer
   # this mixin defines lambda facotry method get_format for legacy marc formats
   include Blacklight::Marc::Indexer::Formats
+  include BlacklightSolrplugins::Indexer
 
   def initialize
     super
@@ -106,7 +107,12 @@ class MarcIndexer < Blacklight::Marc::Indexer
     to_field 'subject_topic_facet', extract_marc("600abcdq:610ab:611ab:630aa:650aa:653aa:654ab:655ab", :trim_punctuation => true)
     to_field 'subject_era_facet',  extract_marc("650y:651y:654y:655y", :trim_punctuation => true)
     to_field 'subject_geo_facet',  extract_marc("651a:650z",:trim_punctuation => true )
-     
+    
+    # xfacet fields should call #references to construct JSON
+    to_field 'subject_topic_facet', extract_marc("600abcdq:610ab:611ab:630aa:650aa:653aa:654ab:655ab", :trim_punctuation => true) do |r, acc|
+      acc.map! { |v| references(v) }
+    end
+
     # Publication fields
     to_field 'published_display', extract_marc('260a', :trim_punctuation => true, :alternate_script=>false)
     to_field 'published_vern_display', extract_marc('260a', :trim_punctuation => true, :alternate_script=>:only)

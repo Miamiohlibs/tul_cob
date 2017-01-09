@@ -50,6 +50,7 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 gem 'blacklight'
 gem 'blacklight-marc',  :git => "https://github.com/tulibraries/blacklight-marc", :branch => "fix-extract_marc-format-008"
+gem 'blacklight_solrplugins', :path => 'vendor/blacklight_solrplugins'
 
 group :development, :test do
   gem 'solr_wrapper', '>= 0.3'

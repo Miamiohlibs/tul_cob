@@ -3,6 +3,9 @@ Rails.application.routes.draw do
   
   concern :exportable, Blacklight::Routes::Exportable.new
 
+  # declare xbrowsable concern
+  concern :xbrowsable, BlacklightSolrplugins::Routes::XBrowsable.new
+
   resources :solr_documents, only: [:show], path: '/catalog', controller: 'catalog' do
     concerns :exportable
   end
@@ -22,6 +25,7 @@ Rails.application.routes.draw do
 
   resource :catalog, only: [:index], as: 'catalog', path: '/catalog', controller: 'catalog' do
     concerns :searchable
+    concerns :xbrowsable
   end
 
   concern :exportable, Blacklight::Routes::Exportable.new
