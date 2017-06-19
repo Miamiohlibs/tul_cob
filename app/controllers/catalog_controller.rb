@@ -44,11 +44,11 @@ class CatalogController < ApplicationController
     #}
 
     # solr field configuration for search results/index views
-    config.index.title_field = 'title_statement'
+    config.index.title_field = 'title_statement_display'
     config.index.display_type_field = 'format'
 
     # solr field configuration for document/show views
-    config.show.title_field = 'title_statement'
+    config.show.title_field = 'title_statement_display'
     #config.show.display_type_field = 'format'
 
     # solr fields that will be treated as facets by the blacklight application

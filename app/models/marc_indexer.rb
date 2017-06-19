@@ -14,10 +14,12 @@ class MarcIndexer < Blacklight::Marc::Indexer
       provide "marc_source.type", "xml"
       # set this to be non-negative if threshold should be enforced
       provide 'solr_writer.max_skipped', -1
-      #provide 'solr.update_url', 'http://localhost:8983/solr/blacklight-core/update'
+
+      provide 'solr.update_url', Blacklight.connection_config[:url]
       provide "solr_writer.commit_on_close", "false"
     end
 
+    p 
     #to_field 'id', trim(extract_marc("001"), :first => true)
     to_field("id") do |rec, acc|
       if (rec['001'])
@@ -34,7 +36,7 @@ class MarcIndexer < Blacklight::Marc::Indexer
 
     to_field "language_facet", marc_languages("008[35-37]:041a:041d:041e:041g:041j") #NOTE: added egj
     to_field "format", get_format
-    to_field "isbn_t",  extract_marc('020a', :separator=>nil) do |rec, acc|
+    to_field "isbn_t",  extract_marc('020aq', :separator=>nil) do |rec, acc|
          orig = acc.dup
          acc.map!{|x| StdNum::ISBN.allNormalizedValues(x)}
          acc << orig
@@ -292,10 +294,10 @@ class MarcIndexer < Blacklight::Marc::Indexer
 
     #Identifier fields
 
-    to_field 'isbn', extract_marc('020aq')
-    to_field 'issn', extract_marc('022a')
-    to_field 'pub_no', extract_marc('086az')
-    to_field 'govdoc', extract_marc('086az')
-    to_field 'diamond_id', extract_marc('907a')
+    #to_field 'isbn_display', extract_marc('020aq')
+    to_field 'issn_display', extract_marc('022a')
+    to_field 'pub_no_display', extract_marc('086az')
+    to_field 'govdoc_display', extract_marc('086az')
+    to_field 'diamond_id_display', extract_marc('907a')
   end
 end
