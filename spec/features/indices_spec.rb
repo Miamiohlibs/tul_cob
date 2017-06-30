@@ -3,7 +3,6 @@ require 'traject'
 require 'traject/command_line'
 require 'yaml'
 
-require 'pry' # FIXME
 RSpec.feature "Indices", type: :feature do
   feature "Home Page" do
     context "publicly available pages" do
@@ -65,7 +64,7 @@ RSpec.feature "Indices", type: :feature do
       end
     end
 
-    scenario "User visits a document directoy" do
+    scenario "User visits a document directly" do
       visit "catalog/#{item['doc_id']}"
       expect(current_url).to eq item_url
       expect(page).to have_text(item['title'])
