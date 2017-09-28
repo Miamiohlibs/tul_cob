@@ -79,3 +79,33 @@ gem 'awesome_print'
 gem 'capybara'
 gem 'webmock'
 gem 'chosen-rails'
+gem 'quick_search-core'
+
+# -Inserted by QuickSearch-
+
+# QuickSearch searchers
+#
+# If you want to use different searchers, remove/replace these and be sure to remove them from
+# your config/quick_search_config.yml file as well as references to them in your theme's search
+# results page template
+
+gem 'quick_search-wikipedia_searcher'
+gem 'quick_search-open_library_searcher'
+gem 'quick_search-arxiv_searcher'
+gem 'quick_search-placeholder_searcher'
+
+# -END Inserted by QuickSearch-
+
+
+
+# -Inserted by QuickSearch-
+
+# QuickSearch theme
+#
+# Remove the following if you want to use a different theme
+
+gem 'quick_search-generic_theme'
+
+# END -Inserted by QuickSearch-
+
+
