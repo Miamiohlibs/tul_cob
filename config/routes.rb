@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  mount QuickSearch::Engine => "/"
+  mount QuickSearch::Engine => "/quick_search"
 
   root :to => "catalog#index"
 
