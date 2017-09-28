@@ -24,7 +24,7 @@
 // this:
 //= require 'blacklight_range_limit'
 
-//= require_tree .
+//= require quick_search
 
 $(document).ready(function(){
 	$(this).find(':input[id=renew_selected]').prop('disabled', true);
